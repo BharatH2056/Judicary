@@ -132,6 +132,71 @@ function initThreeBackground() {
 
     window._bgSphere = icoMesh;
 
+    // ── SCALES OF JUSTICE ──────────────────────────────────────────
+    const scalesGroup = new THREE.Group()
+
+    // Stand
+    const stand = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.05, 0.1, 3, 16),
+      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.15, wireframe: true })
+    )
+    stand.position.set(0, -1, 0)
+    scalesGroup.add(stand)
+
+    // Top bar
+    const bar = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.03, 0.03, 3, 16),
+      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.15, wireframe: true })
+    )
+    bar.rotation.z = Math.PI / 2
+    bar.position.set(0, 1.2, 0)
+    scalesGroup.add(bar)
+
+    // Left pan
+    const leftPan = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.6, 0.6, 0.05, 32),
+      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.12, wireframe: true })
+    )
+    leftPan.position.set(-1.5, 0, 0)
+    scalesGroup.add(leftPan)
+
+    // Right pan
+    const rightPan = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.6, 0.6, 0.05, 32),
+      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.12, wireframe: true })
+    )
+    rightPan.position.set(1.5, 0, 0)
+    scalesGroup.add(rightPan)
+
+    // Left chain
+    const leftChain = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.01, 0.01, 1.2, 8),
+      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.15, wireframe: true })
+    )
+    leftChain.position.set(-1.5, 0.6, 0)
+    scalesGroup.add(leftChain)
+
+    // Right chain
+    const rightChain = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.01, 0.01, 1.2, 8),
+      new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.15, wireframe: true })
+    )
+    rightChain.position.set(1.5, 0.6, 0)
+    scalesGroup.add(rightChain)
+
+    // Position entire scales group
+    scalesGroup.position.set(4, 0, -5)
+    scalesGroup.scale.set(3, 3, 3)
+    scene.add(scalesGroup)
+
+    // Mouse tracking for scales
+    let scalesTargetX = 0
+    let scalesTargetY = 0
+    document.addEventListener('mousemove', (e) => {
+      scalesTargetX = (e.clientX / window.innerWidth - 0.5) * 3
+      scalesTargetY = -(e.clientY / window.innerHeight - 0.5) * 3
+    })
+
     // ── RESIZE ─────────────────────────────────────────────────────
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -171,6 +236,22 @@ function initThreeBackground() {
             s.rotation.x += s.userData.rotX;
             s.rotation.y += s.userData.rotY;
         });
+
+        // Scales cursor follow
+        // Only left and right rotation (Y axis only)
+        const targetRotY = scalesTargetX * 0.3
+        const clampedY = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, targetRotY))
+        scalesGroup.rotation.y += (clampedY - scalesGroup.rotation.y) * 0.05
+
+        // Remove or comment out rotation.x completely
+        scalesGroup.rotation.x = 0
+
+        // Swinging pans animation
+        const scalesTime = Date.now() * 0.001
+        leftPan.position.y = Math.sin(scalesTime) * 0.3
+        rightPan.position.y = -Math.sin(scalesTime) * 0.3
+        leftChain.position.y = 0.6 + Math.sin(scalesTime) * 0.15
+        rightChain.position.y = 0.6 - Math.sin(scalesTime) * 0.15
 
         // 5. Camera — gentle auto float + mouse parallax
         camera.position.y = Math.sin(elapsed * 0.5) * 0.8;
