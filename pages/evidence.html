@@ -1,0 +1,32 @@
+<div class="page-container">
+    <div class="page-header">
+        <div>
+            <h2 class="page-title">Evidence Locker</h2>
+            <p class="text-secondary" style="margin-top: 4px; font-size: 14px;">Log and manage all submitted case evidence.</p>
+        </div>
+        <button class="btn-primary" id="btn-submit-evidence">
+            <i class="ti ti-circle-plus"></i> Submit Evidence
+        </button>
+    </div>
+
+    <div class="dashboard-panel" style="margin-bottom: 24px;">
+        <div style="display: flex; gap: 24px; align-items: flex-end; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 280px;">
+                <label style="display: block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-primary); margin-bottom: 8px;">Filter by Case</label>
+                <select class="form-control" id="evidence-case-filter">
+                    <!-- Populated by JS -->
+                </select>
+            </div>
+            <div id="evidence-stats" style="font-size: 0.9rem; color: var(--text-muted); padding-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <i class="ti ti-folder-check"></i>
+                Select a case to view its evidence inventory.
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-panel">
+        <div id="evidence-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+</div>

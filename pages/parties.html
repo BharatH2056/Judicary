@@ -1,0 +1,33 @@
+<div class="page-container">
+    <div class="page-header">
+        <div>
+            <h2 class="page-title">Involved Parties</h2>
+            <p class="text-secondary" style="margin-top: 4px; font-size: 14px;">Monitor plaintiffs, defendants, and other involved entities.</p>
+        </div>
+        <div style="display: flex; gap: 12px;">
+            <button class="btn-secondary" id="btn-assign-party">
+                <i class="ti ti-link"></i> Assign to Case
+            </button>
+            <button class="btn-primary" id="btn-add-party">
+                <i class="ti ti-plus"></i> Add Party
+            </button>
+        </div>
+    </div>
+
+    <!-- Relationship Info -->
+    <div class="dashboard-panel" style="border-left: 4px solid var(--accent-primary); background: rgba(124, 58, 237, 0.05); margin-bottom: 24px;">
+        <div style="display: flex; align-items: center; gap: 12px; color: var(--text-primary);">
+            <i class="ti ti-info-circle" style="color: var(--accent-primary); font-size: 1.2rem;"></i>
+            <div style="font-size: 0.9rem; line-height: 1.5;">
+                <strong style="color: var(--accent-primary);">N:M Relationship Demonstration:</strong> 
+                Parties can be linked to multiple legal proceedings. Select a profile to view all cross-referenced cases.
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-panel">
+        <div id="parties-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+</div>

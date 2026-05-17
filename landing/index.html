@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JudicaMS — Premium Court Management System</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖</text></svg>">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+    <!-- Three.js Background Container -->
+    <div id="landing-canvas-container"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-logo">⚖ JudicaMS</div>
+        <div class="nav-links-container">
+            <a href="#" class="nav-link">Platform</a>
+            <a href="#" class="nav-link">How It Works</a>
+            <a href="#" class="nav-link">Features</a>
+            <a href="#" class="nav-link">Relationships</a>
+            <a href="#" class="nav-link">About</a>
+        </div>
+        <a href="../index.html" class="nav-cta">Enter JudicaMS →</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="hero">
+        <div class="hero-badge">
+            <span class="badge-dot"></span>
+            DBMS Mini Project — 2026
+        </div>
+
+        <h1 class="hero-title">
+            Where justice meets
+            <br>intelligent management
+        </h1>
+
+        <p class="hero-subtitle">
+            a complete court management system — where case filing,
+            <br>hearing scheduling and verdict tracking converge as one
+        </p>
+
+        <a href="../index.html" class="hero-btn">
+            Enter Dashboard
+            <span class="btn-arrow">→</span>
+        </a>
+
+        <!-- Stats Section -->
+        <div class="hero-stats">
+            <div class="stat-pill">
+                <span class="stat-num">10</span>
+                <span class="stat-label">Cases</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-pill">
+                <span class="stat-num">3</span>
+                <span class="stat-label">Cardinality Types</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-pill">
+                <span class="stat-num">5</span>
+                <span class="stat-label">CRUD Operations</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Features Minimal Section -->
+    <section class="features-minimal">
+        <div class="feature-row">
+            <span class="feature-num">01</span>
+            <span class="feature-name">Case Management</span>
+            <span class="feature-desc">Full CRUD — file, track, update and close cases</span>
+            <span class="feature-tag">1:N</span>
+        </div>
+        <div class="feature-row">
+            <span class="feature-num">02</span>
+            <span class="feature-name">Hearing Scheduling</span>
+            <span class="feature-desc">Timeline view with judge and courtroom assignment</span>
+            <span class="feature-tag">1:N</span>
+        </div>
+        <div class="feature-row">
+            <span class="feature-num">03</span>
+            <span class="feature-name">Verdict Recording</span>
+            <span class="feature-desc">One verdict per case — strictly enforced 1:1 rule</span>
+            <span class="feature-tag">1:1</span>
+        </div>
+        <div class="feature-row">
+            <span class="feature-num">04</span>
+            <span class="feature-name">Party & Lawyer Links</span>
+            <span class="feature-desc">Many cases many parties — junction table N:M</span>
+            <span class="feature-tag">N:M</span>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="landing-footer">
+        <span>⚖ JudicaMS</span>
+        <span>Court & Judiciary Management System — DBMS Mini Project 2026</span>
+        <a href="../index.html" class="footer-cta">Enter Dashboard →</a>
+    </footer>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <!-- Scripts -->
+    <script src="js/landing-bg.js"></script>
+    <script src="js/landing.js"></script>
+</body>
+</html>

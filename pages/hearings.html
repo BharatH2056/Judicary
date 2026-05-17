@@ -1,0 +1,147 @@
+<div class="page-container">
+    <div class="page-header">
+        <div>
+            <h2 class="page-title">Hearings Schedule</h2>
+            <p style="margin-top: 4px; font-size: 14px; color: var(--text-secondary);">Manage court sessions and calendar events.</p>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center;">
+            <div class="dashboard-panel" style="padding: 4px; display: flex; border-radius: 12px; align-items: center; justify-content: center; height: fit-content; gap: 4px; margin-bottom: 0;">
+                <button class="action-btn" id="view-timeline" style="background: var(--accent-light); color: var(--accent-text); border-color: var(--accent-glow);" title="Timeline View"><i class="ti ti-list"></i></button>
+                <button class="action-btn" id="view-calendar" style="background: transparent; color: var(--text-muted); border-color: transparent;" title="Calendar View"><i class="ti ti-calendar"></i></button>
+            </div>
+            <button class="btn btn-primary" id="btn-schedule-hearing">
+                <i class="ti ti-plus"></i> Schedule
+            </button>
+        </div>
+    </div>
+
+    <!-- Timeline View -->
+    <div class="dashboard-panel" id="hearings-timeline-view">
+        <div class="filter-bar" style="display: flex; gap: 16px; margin-bottom: 30px; align-items: center; flex-wrap: wrap;">
+            <div class="search-box" style="flex: 1; min-width: 200px; position: relative;">
+                <i class="ti ti-search" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                <input type="text" class="form-control" id="hearing-search" placeholder="Search by case title or ID..." style="padding-left: 40px;">
+            </div>
+            <input type="date" class="form-control" id="filter-date" style="width: auto;">
+            <select class="form-control" id="filter-judge" style="width: 150px;">
+                <option value="">All Judges</option>
+                <!-- Populated by JS -->
+            </select>
+            <button class="btn btn-secondary" id="btn-clear-filters" style="padding: 10px 16px;">Clear</button>
+            <div style="font-size: 13px; color: var(--text-muted); margin-left: auto;" id="hearing-count">
+                Showing 0 hearings
+            </div>
+        </div>
+
+        <div class="timeline-container" id="hearings-timeline" style="position: relative; padding-left: 30px;">
+            <!-- Timeline line -->
+            <div style="position: absolute; left: 11px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--accent), transparent);"></div>
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- Calendar View -->
+    <div class="dashboard-panel" id="hearings-calendar-view" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+            <button class="btn btn-secondary" id="cal-prev"><i class="ti ti-chevron-left"></i> Prev</button>
+            <h3 id="cal-month-year" style="font-weight: 700; font-size: 24px; color: white; margin: 0;">May 2026</h3>
+            <button class="btn btn-secondary" id="cal-next">Next <i class="ti ti-chevron-right"></i></button>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; text-align: center; font-weight: 600; font-size: 12px; margin-bottom: 12px; color: var(--accent-text); letter-spacing: 0.1em;">
+            <div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div>
+        </div>
+        <div id="calendar-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px;">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+</div>
+
+<style>
+    .cal-day {
+        aspect-ratio: 1;
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg-secondary);
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    .cal-day.other-month { opacity: 0.25; }
+    .cal-day.today { border-color: var(--accent); background: var(--accent-light); }
+    .cal-day.has-hearings { cursor: pointer; border-color: var(--status-open-text); }
+    .cal-day.has-hearings:hover { transform: translateY(-2px); border-color: var(--text-primary); background: var(--bg-tertiary); }
+    
+    .cal-date { font-weight: 600; font-size: 15px; margin-bottom: 8px; color: #fff; }
+    .cal-badge { 
+        background: var(--accent); 
+        color: white; 
+        border-radius: 4px; 
+        font-size: 10px; 
+        padding: 2px 6px; 
+        display: inline-block; 
+        margin-top: auto; 
+        font-weight: 700; 
+        text-align: center;
+    }
+    
+    /* Timeline styles */
+    .timeline-item {
+        position: relative;
+        padding-bottom: 24px;
+    }
+    .timeline-dot {
+        position: absolute;
+        left: -19px;
+        top: 24px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--status-open-text);
+        box-shadow: 0 0 10px var(--status-open-text);
+        border: 2px solid var(--bg-primary);
+        transform: translateX(-50%);
+        z-index: 2;
+    }
+    .timeline-item.past .timeline-dot {
+        background: var(--text-muted);
+        box-shadow: none;
+    }
+    .timeline-content {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        padding: 20px;
+        transition: all 0.2s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+    .timeline-content:hover {
+        background: var(--bg-tertiary);
+        border-color: var(--border-medium);
+        transform: translateX(4px);
+    }
+    .timeline-item.past .timeline-content {
+        opacity: 0.5;
+    }
+    
+    .timeline-time {
+        min-width: 100px;
+    }
+    .timeline-time .date { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .timeline-time .time { font-size: 18px; font-weight: 600; color: #fff; }
+    
+    .timeline-details {
+        flex: 1;
+    }
+    .timeline-details .title { font-size: 16px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+    .timeline-details .meta { font-size: 13px; color: var(--text-secondary); display: flex; gap: 16px; }
+    .timeline-details .meta span { display: flex; align-items: center; gap: 6px; }
+    .timeline-details .meta i { color: var(--accent-text); }
+</style>
+

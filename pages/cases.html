@@ -1,0 +1,41 @@
+<div class="page-container">
+    <div class="page-header">
+        <div>
+            <h2 class="page-title">Cases Directory</h2>
+            <p style="margin-top: 4px; font-size: 14px; color: var(--text-secondary);">Manage and track all legal proceedings.</p>
+        </div>
+        <button class="btn btn-primary" id="btn-new-case">
+            <i class="ti ti-plus"></i> New Case
+        </button>
+    </div>
+
+    <div class="dashboard-panel">
+        <div class="filter-bar" style="display: flex; gap: 16px; margin-bottom: 24px; align-items: center; flex-wrap: wrap;">
+            <div class="search-box" style="flex: 1; min-width: 250px; position: relative;">
+                <i class="ti ti-search" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                <input type="text" class="form-control" id="case-search" placeholder="Search by Case ID or Title..." style="padding-left: 40px;">
+            </div>
+            <select class="form-control" id="filter-type" style="width: 150px;">
+                <option value="">All Types</option>
+                <option value="Criminal">Criminal</option>
+                <option value="Civil">Civil</option>
+                <option value="Family">Family</option>
+            </select>
+            <select class="form-control" id="filter-status" style="width: 150px;">
+                <option value="">All Statuses</option>
+                <option value="Open">Open</option>
+                <option value="Pending">Pending</option>
+                <option value="Hearing">Hearing</option>
+                <option value="Closed">Closed</option>
+            </select>
+            <div style="font-size: 13px; color: var(--text-muted);" id="case-count">
+                Showing 0 cases
+            </div>
+        </div>
+
+        <div class="cases-grid" id="cases-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+</div>
+

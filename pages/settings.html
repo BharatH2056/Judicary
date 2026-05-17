@@ -1,0 +1,171 @@
+<div style="padding:28px; position:relative; z-index:5;">
+
+  <!-- Header -->
+  <div style="margin-bottom:32px;">
+    <h1 style="font-size:28px; font-weight:700; color:#ffffff; font-family:'Space Grotesk',sans-serif; margin:0 0 6px 0;">Settings</h1>
+    <p style="font-size:13px; color:rgba(255,255,255,0.35); margin:0;">Manage your system preferences</p>
+  </div>
+
+  <!-- Settings Sections -->
+  <div style="display:flex; flex-direction:column; gap:24px; max-width:700px;">
+
+    <!-- Section 1 — System Info -->
+    <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; overflow:hidden;">
+      <div style="padding:20px 24px; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; gap:10px;">
+        <i class="ti ti-info-circle" style="font-size:18px; color:rgba(255,255,255,0.4);"></i>
+        <span style="font-size:14px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif;">System Information</span>
+      </div>
+      <div style="padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.05);">
+          <div>
+            <div style="font-size:14px; color:#ffffff; margin-bottom:4px;">System Name</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.35);">Name of the management system</div>
+          </div>
+          <div style="font-size:13px; color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.05); padding:6px 14px; border-radius:6px; border:1px solid rgba(255,255,255,0.08);">JudicaMS</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.05);">
+          <div>
+            <div style="font-size:14px; color:#ffffff; margin-bottom:4px;">Version</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.35);">Current system version</div>
+          </div>
+          <div style="font-size:13px; color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.05); padding:6px 14px; border-radius:6px; border:1px solid rgba(255,255,255,0.08);">V4.3 STABLE</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-size:14px; color:#ffffff; margin-bottom:4px;">Database</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.35);">Connected database</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:7px; height:7px; border-radius:50%; background:#4ade80; box-shadow:0 0 8px rgba(74,222,128,0.5);"></div>
+            <div style="font-size:13px; color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.05); padding:6px 14px; border-radius:6px; border:1px solid rgba(255,255,255,0.08);">MongoDB Connected</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2 — API Settings -->
+    <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; overflow:hidden;">
+      <div style="padding:20px 24px; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; gap:10px;">
+        <i class="ti ti-api" style="font-size:18px; color:rgba(255,255,255,0.4);"></i>
+        <span style="font-size:14px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif;">API Configuration</span>
+      </div>
+      <div style="padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.05);">
+          <div>
+            <div style="font-size:14px; color:#ffffff; margin-bottom:4px;">Backend URL</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.35);">API server address</div>
+          </div>
+          <div style="font-size:13px; color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.05); padding:6px 14px; border-radius:6px; border:1px solid rgba(255,255,255,0.08); font-family:monospace;">http://localhost:5001/api</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-size:14px; color:#ffffff; margin-bottom:4px;">API Status</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.35);">Current connection status</div>
+          </div>
+          <div id="api-status" style="display:flex; align-items:center; gap:8px;">
+            <div style="width:7px; height:7px; border-radius:50%; background:#4ade80; box-shadow:0 0 8px rgba(74,222,128,0.5);"></div>
+            <div style="font-size:13px; color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.05); padding:6px 14px; border-radius:6px; border:1px solid rgba(255,255,255,0.08);">Online</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 — Data Management -->
+    <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; overflow:hidden;">
+      <div style="padding:20px 24px; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; gap:10px;">
+        <i class="ti ti-database" style="font-size:18px; color:rgba(255,255,255,0.4);"></i>
+        <span style="font-size:14px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif;">Data Management</span>
+      </div>
+      <div style="padding:24px; display:flex; flex-direction:column; gap:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.05);">
+          <div>
+            <div style="font-size:14px; color:#ffffff; margin-bottom:4px;">Export Data</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.35);">Download all cases as JSON</div>
+          </div>
+          <button onclick="exportData()" style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 16px; color:rgba(255,255,255,0.7); font-size:13px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.06)'">
+            <i class="ti ti-download"></i> Export
+          </button>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-size:14px; color:#ffffff; margin-bottom:4px;">Reset Database</div>
+            <div style="font-size:12px; color:rgba(255,255,255,0.35);">Clear all data and reseed sample data</div>
+          </div>
+          <button onclick="resetDatabase()" style="display:flex; align-items:center; gap:8px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); border-radius:8px; padding:8px 16px; color:#f87171; font-size:13px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.background='rgba(239,68,68,0.15)'" onmouseout="this.style.background='rgba(239,68,68,0.08)'">
+            <i class="ti ti-refresh"></i> Reset
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4 — Navigation -->
+    <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; overflow:hidden;">
+      <div style="padding:20px 24px; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; gap:10px;">
+        <i class="ti ti-layout-sidebar" style="font-size:18px; color:rgba(255,255,255,0.4);"></i>
+        <span style="font-size:14px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif;">Quick Navigation</span>
+      </div>
+      <div style="padding:24px; display:grid; grid-template-columns:repeat(3,1fr); gap:10px;">
+        <button onclick="navigateTo('dashboard')" style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; color:rgba(255,255,255,0.6); font-size:13px; cursor:pointer; transition:all 0.2s; font-family:'Inter',sans-serif;" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.color='rgba(255,255,255,0.6)'">
+          <i class="ti ti-layout-dashboard"></i> Dashboard
+        </button>
+        <button onclick="navigateTo('cases')" style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; color:rgba(255,255,255,0.6); font-size:13px; cursor:pointer; transition:all 0.2s; font-family:'Inter',sans-serif;" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.color='rgba(255,255,255,0.6)'">
+          <i class="ti ti-folder-open"></i> Cases
+        </button>
+        <button onclick="navigateTo('hearings')" style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; color:rgba(255,255,255,0.6); font-size:13px; cursor:pointer; transition:all 0.2s; font-family:'Inter',sans-serif;" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.color='rgba(255,255,255,0.6)'">
+          <i class="ti ti-calendar-event"></i> Hearings
+        </button>
+        <button onclick="navigateTo('judges')" style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; color:rgba(255,255,255,0.6); font-size:13px; cursor:pointer; transition:all 0.2s; font-family:'Inter',sans-serif;" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.color='rgba(255,255,255,0.6)'">
+          <i class="ti ti-user-check"></i> Judges
+        </button>
+        <button onclick="navigateTo('lawyers')" style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; color:rgba(255,255,255,0.6); font-size:13px; cursor:pointer; transition:all 0.2s; font-family:'Inter',sans-serif;" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.color='rgba(255,255,255,0.6)'">
+          <i class="ti ti-briefcase"></i> Lawyers
+        </button>
+        <button onclick="navigateTo('parties')" style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; color:rgba(255,255,255,0.6); font-size:13px; cursor:pointer; transition:all 0.2s; font-family:'Inter',sans-serif;" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.color='rgba(255,255,255,0.6)'">
+          <i class="ti ti-users"></i> Parties
+        </button>
+        <button onclick="navigateTo('courtrooms')" style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; color:rgba(255,255,255,0.6); font-size:13px; cursor:pointer; transition:all 0.2s; font-family:'Inter',sans-serif;" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.color='rgba(255,255,255,0.6)'">
+          <i class="ti ti-building"></i> Courtrooms
+        </button>
+        <button onclick="navigateTo('evidence')" style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; color:rgba(255,255,255,0.6); font-size:13px; cursor:pointer; transition:all 0.2s; font-family:'Inter',sans-serif;" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.color='rgba(255,255,255,0.6)'">
+          <i class="ti ti-file-description"></i> Evidence
+        </button>
+        <button onclick="window.location.href='landing.html'" style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 16px; color:rgba(255,255,255,0.6); font-size:13px; cursor:pointer; transition:all 0.2s; font-family:'Inter',sans-serif;" onmouseover="this.style.background='rgba(255,255,255,0.08)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.color='rgba(255,255,255,0.6)'">
+          <i class="ti ti-home"></i> Landing Page
+        </button>
+      </div>
+    </div>
+
+    <!-- Section 5 — About -->
+    <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; overflow:hidden;">
+      <div style="padding:20px 24px; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; gap:10px;">
+        <i class="ti ti-info-square" style="font-size:18px; color:rgba(255,255,255,0.4);"></i>
+        <span style="font-size:14px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif;">About</span>
+      </div>
+      <div style="padding:24px;">
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; justify-content:space-between;">
+            <span style="font-size:13px; color:rgba(255,255,255,0.35);">Project</span>
+            <span style="font-size:13px; color:rgba(255,255,255,0.6);">DBMS Mini Project</span>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span style="font-size:13px; color:rgba(255,255,255,0.35);">Frontend</span>
+            <span style="font-size:13px; color:rgba(255,255,255,0.6);">HTML + CSS + Vanilla JS</span>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span style="font-size:13px; color:rgba(255,255,255,0.35);">Backend</span>
+            <span style="font-size:13px; color:rgba(255,255,255,0.6);">Node.js + Express.js</span>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span style="font-size:13px; color:rgba(255,255,255,0.35);">Database</span>
+            <span style="font-size:13px; color:rgba(255,255,255,0.6);">MongoDB + Mongoose</span>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span style="font-size:13px; color:rgba(255,255,255,0.35);">Cardinality</span>
+            <span style="font-size:13px; color:rgba(255,255,255,0.6);">1:1, 1:N, N:M</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

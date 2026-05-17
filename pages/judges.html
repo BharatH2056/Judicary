@@ -1,0 +1,28 @@
+<div class="page-container">
+    <div class="page-header">
+        <div>
+            <h2 class="page-title">Judicial Roster</h2>
+            <p class="text-secondary" style="margin-top: 4px; font-size: 14px;">Manage presiding judges and courtroom assignments.</p>
+        </div>
+        <button class="btn-primary" id="btn-add-judge">
+            <i class="ti ti-user-plus"></i> Add Judge
+        </button>
+    </div>
+
+    <!-- Relationship Enforcement Info -->
+    <div class="dashboard-panel" style="border-left: 4px solid var(--accent-primary); background: rgba(124, 58, 237, 0.05); margin-bottom: 24px;">
+        <div style="display: flex; align-items: center; gap: 12px; color: var(--text-primary);">
+            <i class="ti ti-info-circle" style="color: var(--accent-primary); font-size: 1.2rem;"></i>
+            <div style="font-size: 0.9rem; line-height: 1.5;">
+                <strong style="color: var(--accent-primary);">1:1 Relationship Enforcement:</strong> 
+                Each judge is assigned to a specific courtroom. Only available courtrooms are shown during registration.
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-panel">
+        <div id="judges-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+</div>

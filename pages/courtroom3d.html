@@ -1,0 +1,26 @@
+<div class="page-header">
+    <div>
+        <h2 class="page-title">3D Courtroom Explorer</h2>
+        <p class="text-secondary" style="margin-top: 4px; font-size: 14px;">Interactive visualization of judicial spatial assignments.</p>
+    </div>
+    <div class="page-actions" style="display: flex; gap: 12px; align-items: center;">
+        <select id="courtroom-selector" class="form-control" style="min-width: 200px;">
+            <option value="">Select Courtroom...</option>
+        </select>
+        <button class="btn-primary" id="btn-reset-camera">
+            <i class="ti ti-camera-rotate"></i> Reset View
+        </button>
+    </div>
+</div>
+
+<div class="dashboard-panel" style="padding: 0; overflow: hidden; height: calc(100vh - 200px); position: relative; border-color: rgba(255,255,255,0.05);">
+    <div id="courtroom-3d-container" style="width: 100%; height: 100%; min-height: 500px; background: #000;"></div>
+    
+    <!-- Cinematic Overlay Overlay -->
+    <div style="position: absolute; bottom: 20px; left: 20px; pointer-events: none; z-index: 10;">
+        <div style="display: flex; align-items: center; gap: 12px; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); padding: 8px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: var(--text-muted);">
+            <i class="ti ti-mouse" style="color: var(--accent-primary);"></i>
+            Orbit to rotate • Scroll to zoom • Right click to pan
+        </div>
+    </div>
+</div>

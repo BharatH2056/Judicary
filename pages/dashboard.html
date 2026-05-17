@@ -1,0 +1,79 @@
+<div style="padding:28px; position:relative; z-index:5;">
+
+  <!-- Header -->
+  <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:28px;">
+    <div>
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:8px;">
+        <h1 style="font-size:32px; font-weight:700; color:#ffffff; font-family:'Space Grotesk',sans-serif; margin:0; letter-spacing:-0.02em;">Command Center</h1>
+        <span style="background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.7); border:1px solid rgba(255,255,255,0.15); border-radius:8px; font-size:11px; font-weight:600; padding:4px 12px; letter-spacing:0.08em;">V4.3 SYNCED</span>
+      </div>
+      <p id="dash-date" style="font-size:14px; color:rgba(255,255,255,0.35); margin:0;"></p>
+    </div>
+    <div style="background:rgba(255,255,255,0.04); color:rgba(255,255,255,0.4); border:1px solid rgba(255,255,255,0.08); border-radius:8px; font-size:11px; font-weight:600; padding:8px 16px; letter-spacing:0.08em; font-family:monospace;">SYSTEM_STATUS: STABLE_V4.3</div>
+  </div>
+
+  <!-- Metric Cards -->
+  <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px;">
+    
+    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:24px; height:180px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.4);">TOTAL CASES</span>
+        <div style="width:36px; height:36px; background:rgba(255,255,255,0.06); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; color:rgba(255,255,255,0.4);"><i class="ti ti-folder"></i></div>
+      </div>
+      <div id="stat-total" style="font-size:56px; font-weight:700; color:#ffffff; font-family:'Space Grotesk',sans-serif; line-height:1;">0</div>
+      <div style="font-size:12px; color:rgba(255,255,255,0.25);">All records sync'd</div>
+    </div>
+
+    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:24px; height:180px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.4);">OPEN CASES</span>
+        <div style="width:36px; height:36px; background:rgba(255,255,255,0.06); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; color:rgba(255,255,255,0.4);"><i class="ti ti-loader"></i></div>
+      </div>
+      <div id="stat-open" style="font-size:56px; font-weight:700; color:#ffffff; font-family:'Space Grotesk',sans-serif; line-height:1;">0</div>
+      <div style="font-size:12px; color:rgba(255,255,255,0.25);">Active tracking</div>
+    </div>
+
+    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:24px; height:180px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.4);">HEARINGS TODAY</span>
+        <div style="width:36px; height:36px; background:rgba(255,255,255,0.06); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; color:rgba(255,255,255,0.4);"><i class="ti ti-calendar"></i></div>
+      </div>
+      <div id="stat-hearings" style="font-size:56px; font-weight:700; color:#ffffff; font-family:'Space Grotesk',sans-serif; line-height:1;">0</div>
+      <div style="font-size:12px; color:rgba(255,255,255,0.25);">Scheduled today</div>
+    </div>
+
+    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:24px; height:180px; box-sizing:border-box; display:flex; flex-direction:column; justify-content:space-between;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:11px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.4);">VERDICTS MONTH</span>
+        <div style="width:36px; height:36px; background:rgba(255,255,255,0.06); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; color:rgba(255,255,255,0.4);"><i class="ti ti-gavel"></i></div>
+      </div>
+      <div id="stat-verdicts" style="font-size:56px; font-weight:700; color:#ffffff; font-family:'Space Grotesk',sans-serif; line-height:1;">0</div>
+      <div style="font-size:12px; color:rgba(255,255,255,0.25);">Resolved this month</div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Grid -->
+  <div style="display:grid; grid-template-columns:1.6fr 1fr; gap:20px;">
+
+    <!-- Recent Cases -->
+    <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:24px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <span style="font-size:16px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif;">Recent Cases</span>
+        <span onclick="navigateTo('cases')" style="font-size:13px; color:rgba(255,255,255,0.4); cursor:pointer;">View All →</span>
+      </div>
+      <div id="recent-cases-list"></div>
+    </div>
+
+    <!-- Upcoming Hearings -->
+    <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:24px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <span style="font-size:16px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif;">Upcoming Hearings</span>
+        <span onclick="navigateTo('hearings')" style="font-size:13px; color:rgba(255,255,255,0.4); cursor:pointer;">Schedule →</span>
+      </div>
+      <div id="upcoming-hearings-list"></div>
+    </div>
+
+  </div>
+
+</div>

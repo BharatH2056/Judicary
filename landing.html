@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JudicaMS — Court & Judiciary Management System</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖</text></svg>">
+  
+  <!-- CDN imports in <head> -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; background: #080808; color: #ffffff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    .hero-title { letter-spacing: -0.04em; line-height: 0.95; font-family: 'Space Grotesk', sans-serif; }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #080808;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Keyframe micro-animations */
+    @keyframes pulse {
+      0% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.05); }
+      100% { opacity: 0.3; transform: scale(1); }
+    }
+    .ambient-glow {
+      animation: pulse 8s ease-in-out infinite;
+    }
+
+    /* Mobile Responsive Overrides */
+    @media (max-width: 1024px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .nav-center-pill {
+        display: none !important;
+      }
+      .nav-container {
+        padding: 0 20px !important;
+      }
+      .hero-section {
+        height: auto !important;
+        min-height: 100vh;
+        padding: 120px 20px 80px 20px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+      }
+      .hero-title-1 {
+        position: static !important;
+        font-size: 16vw !important;
+        margin-bottom: 8px;
+        left: auto !important;
+        top: auto !important;
+      }
+      .hero-title-2 {
+        position: static !important;
+        font-size: 16vw !important;
+        align-self: flex-end;
+        margin-bottom: 24px;
+        right: auto !important;
+        top: auto !important;
+      }
+      .hero-desc {
+        position: static !important;
+        max-width: 100% !important;
+        margin-bottom: 40px !important;
+        left: auto !important;
+        top: auto !important;
+      }
+      .hero-stat-1, .hero-stat-2, .hero-stat-3 {
+        position: static !important;
+        text-align: left !important;
+        margin-top: 16px !important;
+        width: 100% !important;
+        right: auto !important;
+        left: auto !important;
+        bottom: auto !important;
+        top: auto !important;
+      }
+      .hero-stat-1 .line-wrapper, .hero-stat-2 .line-wrapper, .hero-stat-3 .line-wrapper {
+        justify-content: flex-start !important;
+      }
+      .hero-stat-1 hr, .hero-stat-2 hr, .hero-stat-3 hr {
+        display: none !important;
+      }
+      .hero-scroll {
+        display: none !important;
+      }
+      .features-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 24px !important;
+      }
+      .entities-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .cta-heading {
+        font-size: 44px !important;
+      }
+      .footer-container {
+        flex-direction: column !important;
+        gap: 16px !important;
+        text-align: center !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glow Orbs -->
+  <div class="ambient-glow" style="position:fixed; top:20%; right:-10%; width:600px; height:600px; background:radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 70%); pointer-events:none; z-index:1;"></div>
+  <div class="ambient-glow" style="position:fixed; bottom:10%; left:-10%; width:500px; height:500px; background:radial-gradient(circle, rgba(255,255,255,0.015) 0%, transparent 70%); pointer-events:none; z-index:1;"></div>
+
+  <!-- THREE.JS 3D SCENE BACKGROUND -->
+  <div id="three-bg-container" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none;"></div>
+  <canvas id="bg-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; display:none;"></canvas>
+
+  <!-- SECTION 1 — Full screen hero -->
+  <section class="hero-section" style="position:relative; height:100vh; width:100%; overflow:hidden; display:flex; flex-direction:column; z-index:2;">
+    
+    <!-- Navbar — floating pill at top -->
+    <nav class="nav-container" style="position:absolute; top:24px; left:0; right:0; z-index:20; padding:0 40px; display:flex; align-items:center; justify-content:space-between;">
+      
+      <!-- Left pill — logo + brand -->
+      <div style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.06); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.1); border-radius:50px; padding:10px 20px; transition: all 0.3s ease;">
+        <i class="ti ti-building-arch" style="font-size:18px; color:#ffffff;"></i>
+        <span style="font-size:15px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif; letter-spacing:-0.02em;">JudicaMS</span>
+      </div>
+
+      <!-- Center pill — nav links (hidden on mobile) -->
+      <div class="nav-center-pill" style="display:flex; align-items:center; gap:4px; background:rgba(255,255,255,0.05); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.08); border-radius:50px; padding:6px;">
+        <a href="#features" style="color:rgba(255,255,255,0.6); font-size:13px; padding:8px 18px; border-radius:50px; text-decoration:none; transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.color='rgba(255,255,255,0.6)';this.style.background='transparent'">features</a>
+        <a href="#stats" style="color:rgba(255,255,255,0.6); font-size:13px; padding:8px 18px; border-radius:50px; text-decoration:none; transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.color='rgba(255,255,255,0.6)';this.style.background='transparent'">about</a>
+        <a href="#entities" style="color:rgba(255,255,255,0.6); font-size:13px; padding:8px 18px; border-radius:50px; text-decoration:none; transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.color='rgba(255,255,255,0.6)';this.style.background='transparent'">system</a>
+      </div>
+
+      <!-- Right button — Enter System -->
+      <a href="index.html" onclick="sessionStorage.setItem('entered', 'true')" style="background:#ffffff; color:#000000; font-size:13px; font-weight:500; border-radius:50px; padding:12px 24px; text-decoration:none; font-family:'Inter',sans-serif; transition:all 0.2s; border: 1px solid transparent;" onmouseover="this.style.background='rgba(255,255,255,0.85)'" onmouseout="this.style.background='#ffffff'">enter system →</a>
+
+    </nav>
+
+    <!-- Hero content — staggered large typography -->
+    <!-- Giant staggered words -->
+    <h1 class="hero-title hero-title-1" style="position:absolute; font-size:13vw; font-weight:700; color:#ffffff; left:40px; top:18%; user-select:none;">justice</h1>
+    <h1 class="hero-title hero-title-2" style="position:absolute; font-size:13vw; font-weight:700; color:#ffffff; right:40px; top:36%; user-select:none;">dataset</h1>
+
+    <!-- Description — left side middle -->
+    <p class="hero-desc" style="position:absolute; left:40px; top:48%; max-width:260px; font-size:15px; line-height:1.6; color:rgba(255,255,255,0.6);">managing court cases, hearings, and verdicts with precision and transparency</p>
+
+    <!-- Stat — top right -->
+    <div class="hero-stat-1" style="position:absolute; right:40px; top:16%; text-align:right;">
+      <div class="line-wrapper" style="display:flex; align-items:center; gap:12px; justify-content:flex-end;">
+        <div style="height:1px; width:80px; background:rgba(255,255,255,0.3); transform:rotate(20deg);"></div>
+        <span style="font-size:48px; font-weight:600; font-family:'Space Grotesk',sans-serif; color:#ffffff;">10+</span>
+      </div>
+      <p style="font-size:12px; color:rgba(255,255,255,0.4); margin-top:4px;">cases managed</p>
+    </div>
+
+    <!-- Stat — bottom left -->
+    <div class="hero-stat-2" style="position:absolute; left:40px; bottom:120px;">
+      <div class="line-wrapper" style="display:flex; align-items:center; gap:12px;">
+        <span style="font-size:48px; font-weight:600; font-family:'Space Grotesk',sans-serif; color:#ffffff;">3</span>
+        <div style="height:1px; width:80px; background:rgba(255,255,255,0.3); transform:rotate(-20deg);"></div>
+      </div>
+      <p style="font-size:12px; color:rgba(255,255,255,0.4); margin-top:4px;">judges assigned</p>
+    </div>
+
+    <!-- Stat — bottom right -->
+    <div class="hero-stat-3" style="position:absolute; right:40px; bottom:100px; text-align:right;">
+      <div class="line-wrapper" style="display:flex; align-items:center; gap:12px; justify-content:flex-end;">
+        <div style="height:1px; width:80px; background:rgba(255,255,255,0.3); transform:rotate(-20deg);"></div>
+        <span style="font-size:48px; font-weight:600; font-family:'Space Grotesk',sans-serif; color:#ffffff;">8+</span>
+      </div>
+      <p style="font-size:12px; color:rgba(255,255,255,0.4); margin-top:4px;">hearings scheduled</p>
+    </div>
+
+    <!-- Bottom gradient fade -->
+    <div style="position:absolute; bottom:0; left:0; right:0; height:200px; background:linear-gradient(to bottom, transparent, #080808); pointer-events:none;"></div>
+
+    <!-- Scroll indicator -->
+    <div class="hero-scroll" style="position:absolute; bottom:40px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px;">
+      <span style="font-size:11px; color:rgba(255,255,255,0.3); letter-spacing:0.1em; text-transform:uppercase;">scroll</span>
+      <div style="width:1px; height:40px; background:linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 2 — Features section -->
+  <section id="features" style="padding:120px 40px; position:relative; z-index:2; max-width: 1400px; margin: 0 auto;">
+    <p style="font-size:11px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:20px;">what we manage</p>
+    <h2 style="font-size:52px; font-weight:700; font-family:'Space Grotesk',sans-serif; color:#ffffff; letter-spacing:-0.03em; margin-bottom:60px; max-width:600px; line-height:1.1;">everything a court needs in one system</h2>
+
+    <!-- Feature cards grid -->
+    <div class="features-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+
+      <!-- Card 1 — Cases -->
+      <div onclick="sessionStorage.setItem('entered', 'true'); window.location.href='index.html#cases'" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:28px; cursor:pointer; transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" onmouseover="this.style.background='rgba(255,255,255,0.06)';this.style.borderColor='rgba(255,255,255,0.15)';this.style.transform='translateY(-6px)'" onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(255,255,255,0.07)';this.style.transform='translateY(0)'">
+        <div style="width:40px; height:40px; background:rgba(255,255,255,0.06); border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; font-size:20px;"><i class="ti ti-folder-open" style="color:#ffffff;"></i></div>
+        <h3 style="font-size:18px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif; margin-bottom:10px;">case management</h3>
+        <p style="font-size:13px; color:rgba(255,255,255,0.4); line-height:1.6;">file, track and manage criminal, civil, family and corporate cases with full history.</p>
+        <div style="margin-top:20px; font-size:12px; color:rgba(255,255,255,0.3); transition: color 0.2s;" onmouseover="this.style.color='#ffffff'">→ open cases</div>
+      </div>
+
+      <!-- Card 2 — Hearings -->
+      <div onclick="sessionStorage.setItem('entered', 'true'); window.location.href='index.html#hearings'" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:28px; cursor:pointer; transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" onmouseover="this.style.background='rgba(255,255,255,0.06)';this.style.borderColor='rgba(255,255,255,0.15)';this.style.transform='translateY(-6px)'" onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(255,255,255,0.07)';this.style.transform='translateY(0)'">
+        <div style="width:40px; height:40px; background:rgba(255,255,255,0.06); border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; font-size:20px;"><i class="ti ti-calendar-event" style="color:#ffffff;"></i></div>
+        <h3 style="font-size:18px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif; margin-bottom:10px;">hearing scheduler</h3>
+        <p style="font-size:13px; color:rgba(255,255,255,0.4); line-height:1.6;">schedule and track court hearings with judge assignments and courtroom allocation.</p>
+        <div style="margin-top:20px; font-size:12px; color:rgba(255,255,255,0.3); transition: color 0.2s;" onmouseover="this.style.color='#ffffff'">→ view hearings</div>
+      </div>
+
+      <!-- Card 3 — Verdicts -->
+      <div onclick="sessionStorage.setItem('entered', 'true'); window.location.href='index.html#verdicts'" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:28px; cursor:pointer; transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" onmouseover="this.style.background='rgba(255,255,255,0.06)';this.style.borderColor='rgba(255,255,255,0.15)';this.style.transform='translateY(-6px)'" onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(255,255,255,0.07)';this.style.transform='translateY(0)'">
+        <div style="width:40px; height:40px; background:rgba(255,255,255,0.06); border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; font-size:20px;"><i class="ti ti-gavel" style="color:#ffffff;"></i></div>
+        <h3 style="font-size:18px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif; margin-bottom:10px;">verdict records</h3>
+        <p style="font-size:13px; color:rgba(255,255,255,0.4); line-height:1.6;">record final verdicts with decisions and penalties. one verdict per case enforced.</p>
+        <div style="margin-top:20px; font-size:12px; color:rgba(255,255,255,0.3); transition: color 0.2s;" onmouseover="this.style.color='#ffffff'">→ view verdicts</div>
+      </div>
+
+      <!-- Card 4 — Judges -->
+      <div onclick="sessionStorage.setItem('entered', 'true'); window.location.href='index.html#judges'" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:28px; cursor:pointer; transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" onmouseover="this.style.background='rgba(255,255,255,0.06)';this.style.borderColor='rgba(255,255,255,0.15)';this.style.transform='translateY(-6px)'" onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(255,255,255,0.07)';this.style.transform='translateY(0)'">
+        <div style="width:40px; height:40px; background:rgba(255,255,255,0.06); border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; font-size:20px;"><i class="ti ti-user-check" style="color:#ffffff;"></i></div>
+        <h3 style="font-size:18px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif; margin-bottom:10px;">judge profiles</h3>
+        <p style="font-size:13px; color:rgba(255,255,255,0.4); line-height:1.6;">manage judge assignments with 1:1 courtroom allocation and specialization tracking.</p>
+        <div style="margin-top:20px; font-size:12px; color:rgba(255,255,255,0.3); transition: color 0.2s;" onmouseover="this.style.color='#ffffff'">→ view judges</div>
+      </div>
+
+      <!-- Card 5 — Evidence -->
+      <div onclick="sessionStorage.setItem('entered', 'true'); window.location.href='index.html#evidence'" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:28px; cursor:pointer; transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" onmouseover="this.style.background='rgba(255,255,255,0.06)';this.style.borderColor='rgba(255,255,255,0.15)';this.style.transform='translateY(-6px)'" onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(255,255,255,0.07)';this.style.transform='translateY(0)'">
+        <div style="width:40px; height:40px; background:rgba(255,255,255,0.06); border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; font-size:20px;"><i class="ti ti-file-description" style="color:#ffffff;"></i></div>
+        <h3 style="font-size:18px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif; margin-bottom:10px;">evidence vault</h3>
+        <p style="font-size:13px; color:rgba(255,255,255,0.4); line-height:1.6;">submit and track documents, physical, digital and testimony evidence per case.</p>
+        <div style="margin-top:20px; font-size:12px; color:rgba(255,255,255,0.3); transition: color 0.2s;" onmouseover="this.style.color='#ffffff'">→ view evidence</div>
+      </div>
+
+      <!-- Card 6 — Parties & Lawyers -->
+      <div onclick="sessionStorage.setItem('entered', 'true'); window.location.href='index.html#parties'" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; padding:28px; cursor:pointer; transition:all 0.3s cubic-bezier(0.16, 1, 0.3, 1);" onmouseover="this.style.background='rgba(255,255,255,0.06)';this.style.borderColor='rgba(255,255,255,0.15)';this.style.transform='translateY(-6px)'" onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(255,255,255,0.07)';this.style.transform='translateY(0)'">
+        <div style="width:40px; height:40px; background:rgba(255,255,255,0.06); border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:20px; font-size:20px;"><i class="ti ti-users" style="color:#ffffff;"></i></div>
+        <h3 style="font-size:18px; font-weight:600; color:#ffffff; font-family:'Space Grotesk',sans-serif; margin-bottom:10px;">parties & lawyers</h3>
+        <p style="font-size:13px; color:rgba(255,255,255,0.4); line-height:1.6;">manage plaintiffs, defendants and lawyers with n:m case assignments.</p>
+        <div style="margin-top:20px; font-size:12px; color:rgba(255,255,255,0.3); transition: color 0.2s;" onmouseover="this.style.color='#ffffff'">→ view parties</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 3 — Stats bar -->
+  <section id="stats" style="padding:80px 40px; border-top:1px solid rgba(255,255,255,0.06); border-bottom:1px solid rgba(255,255,255,0.06); position:relative; z-index:2;">
+    <div class="stats-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:40px; text-align:center; max-width: 1400px; margin: 0 auto;">
+      <div>
+        <div style="font-size:52px; font-weight:700; font-family:'Space Grotesk',sans-serif; color:#ffffff; letter-spacing:-0.03em;">10+</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.4); margin-top:8px;">cases filed</div>
+      </div>
+      <div>
+        <div style="font-size:52px; font-weight:700; font-family:'Space Grotesk',sans-serif; color:#ffffff; letter-spacing:-0.03em;">3</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.4); margin-top:8px;">judges assigned</div>
+      </div>
+      <div>
+        <div style="font-size:52px; font-weight:700; font-family:'Space Grotesk',sans-serif; color:#ffffff; letter-spacing:-0.03em;">8+</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.4); margin-top:8px;">hearings scheduled</div>
+      </div>
+      <div>
+        <div style="font-size:52px; font-weight:700; font-family:'Space Grotesk',sans-serif; color:#ffffff; letter-spacing:-0.03em;">4</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.4); margin-top:8px;">verdicts recorded</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4 — Database entities section -->
+  <section id="entities" style="padding:120px 40px; position:relative; z-index:2; max-width: 1400px; margin: 0 auto;">
+    <p style="font-size:11px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:20px;">database design</p>
+    <h2 style="font-size:52px; font-weight:700; font-family:'Space Grotesk',sans-serif; color:#ffffff; letter-spacing:-0.03em; margin-bottom:16px; line-height:1.1;">built on proper<br>relational design</h2>
+    <p style="font-size:15px; color:rgba(255,255,255,0.4); margin-bottom:60px;">all three cardinality types demonstrated — 1:1, 1:n, and n:m</p>
+
+    <div class="entities-grid" style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
+      
+      <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:20px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'">
+        <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:12px;">1 : 1</div>
+        <div style="font-size:15px; font-weight:500; color:#ffffff; margin-bottom:6px; font-family:'Space Grotesk',sans-serif;">case ↔ verdict</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.35); line-height:1.4;">one case has exactly one verdict</div>
+      </div>
+      
+      <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:20px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'">
+        <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:12px;">1 : 1</div>
+        <div style="font-size:15px; font-weight:500; color:#ffffff; margin-bottom:6px; font-family:'Space Grotesk',sans-serif;">judge ↔ courtroom</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.35); line-height:1.4;">one judge assigned to one courtroom</div>
+      </div>
+      
+      <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:20px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'">
+        <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:12px;">1 : n</div>
+        <div style="font-size:15px; font-weight:500; color:#ffffff; margin-bottom:6px; font-family:'Space Grotesk',sans-serif;">case → hearings</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.35); line-height:1.4;">one case has many hearings</div>
+      </div>
+      
+      <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:20px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'">
+        <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:12px;">1 : n</div>
+        <div style="font-size:15px; font-weight:500; color:#ffffff; margin-bottom:6px; font-family:'Space Grotesk',sans-serif;">case → evidence</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.35); line-height:1.4;">one case has many evidence records</div>
+      </div>
+      
+      <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:20px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'">
+        <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:12px;">n : m</div>
+        <div style="font-size:15px; font-weight:500; color:#ffffff; margin-bottom:6px; font-family:'Space Grotesk',sans-serif;">case ↔ party</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.35); line-height:1.4;">many cases involve many parties</div>
+      </div>
+      
+      <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:20px; transition: border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.15)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.06)'">
+        <div style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.25); margin-bottom:12px;">n : m</div>
+        <div style="font-size:15px; font-weight:500; color:#ffffff; margin-bottom:6px; font-family:'Space Grotesk',sans-serif;">case ↔ lawyer</div>
+        <div style="font-size:12px; color:rgba(255,255,255,0.35); line-height:1.4;">many cases have many lawyers</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 5 — Bottom CTA -->
+  <section style="padding:120px 40px; text-align:center; position:relative; z-index:2; border-top:1px solid rgba(255,255,255,0.06);">
+    <p style="font-size:11px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:24px;">ready to begin</p>
+    <h2 class="cta-heading" style="font-size:64px; font-weight:700; font-family:'Space Grotesk',sans-serif; color:#ffffff; letter-spacing:-0.04em; line-height:0.95; margin-bottom:40px;">justice starts here</h2>
+    <a href="index.html" onclick="sessionStorage.setItem('entered', 'true')" style="display:inline-block; background:#ffffff; color:#000000; font-size:15px; font-weight:500; border-radius:50px; padding:16px 40px; text-decoration:none; font-family:'Inter',sans-serif; transition:all 0.2s; border: 1px solid transparent;" onmouseover="this.style.background='rgba(255,255,255,0.85)'" onmouseout="this.style.background='#ffffff'">enter system →</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-container" style="padding:40px; border-top:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:center; position:relative; z-index:2; max-width: 1400px; margin: 0 auto;">
+    <span style="font-size:13px; font-weight:600; color:rgba(255,255,255,0.4); font-family:'Space Grotesk',sans-serif;">JudicaMS</span>
+    <span style="font-size:12px; color:rgba(255,255,255,0.2);">court & judiciary management system — dbms mini project</span>
+    <span style="font-size:12px; color:rgba(255,255,255,0.2);">2026</span>
+  </footer>
+
+  <!-- Three.js Background Script -->
+  <script>
+    // 3D Background — Improved Cinematic Style
+    // Features: Colored particles with wave motion, rotating torus rings, mouse parallax, and auto-floating camera.
+    
+    function initThreeBackground() {
+        const container = document.getElementById('three-bg-container');
+        if (!container) return;
+    
+        const scene = new THREE.Scene();
+        // Deep fog — make it feel more expansive
+        scene.fog = new THREE.FogExp2(0x080808, 0.018);
+    
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 2, 18);
+    
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+    
+        // ── LIGHTS ─────────────────────────────────────────────────────
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0xffffff, 0.6, 50);
+        pointLight.position.set(12, 5, -5);
+        scene.add(pointLight);
+    
+        // ── MOUSE TRACKING ─────────────────────────────────────────────
+        let mouseX = 0;
+        let mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+        });
+    
+        // ── IMPROVED PARTICLES ─────────────────────────────────────────
+        const particleCount = 1500;
+        const particleGeometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+        const sizes = new Float32Array(particleCount);
+    
+        for (let i = 0; i < particleCount; i++) {
+            // Position
+            positions[i * 3]     = (Math.random() - 0.5) * 400;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 300;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 200;
+    
+            // Colors — Monochrome (Grey to White)
+            const intensity = 0.5 + Math.random() * 0.5;
+            colors[i * 3]     = intensity; // R
+            colors[i * 3 + 1] = intensity; // G
+            colors[i * 3 + 2] = intensity; // B
+    
+            // Variable sizes
+            sizes[i] = Math.random() * 2 + 0.5;
+        }
+    
+        particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        
+        const particleMaterial = new THREE.PointsMaterial({
+            size: 1.2,
+            transparent: true,
+            opacity: 0.4,
+            vertexColors: true,
+            sizeAttenuation: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending
+        });
+    
+        const particleMesh = new THREE.Points(particleGeometry, particleMaterial);
+        scene.add(particleMesh);
+    
+        // ── ROTATING RINGS ─────────────────────────────────────────────
+        const ringGeometry = new THREE.TorusGeometry(8, 0.02, 16, 100);
+        const ringMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.05,
+            wireframe: true
+        });
+        const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+        ring.rotation.x = Math.PI / 2;
+        ring.position.set(10, 2, -20);
+        scene.add(ring);
+    
+        const ring2 = new THREE.Mesh(
+            new THREE.TorusGeometry(12, 0.015, 16, 100),
+            new THREE.MeshBasicMaterial({
+                color: 0xcccccc,
+                transparent: true,
+                opacity: 0.03,
+                wireframe: true
+            })
+        );
+        ring2.rotation.x = Math.PI / 3;
+        ring2.position.set(14, -2, -25);
+        scene.add(ring2);
+    
+        // ── FLOATING SHAPES ────────────────────────────────────────────
+        const shapes = new THREE.Group();
+        const shapeCount = 10;
+        const shapeGeo = new THREE.BoxGeometry(1, 1, 1);
+        const shapeMat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.03 });
+    
+        for (let i = 0; i < shapeCount; i++) {
+            const mesh = new THREE.Mesh(shapeGeo, shapeMat);
+            const radius = 15 + Math.random() * 10;
+            const angle = Math.random() * Math.PI * 2;
+            mesh.position.set(Math.cos(angle) * radius, (Math.random() - 0.5) * 20, -15 - Math.random() * 10);
+            mesh.rotation.set(Math.random(), Math.random(), Math.random());
+            mesh.userData = { rotX: Math.random() * 0.005, rotY: Math.random() * 0.005 };
+            shapes.add(mesh);
+        }
+        scene.add(shapes);
+    
+        // ── ICOSAHEDRON WIREFRAME — very subtle ───────────────────────
+        const icoGeo = new THREE.IcosahedronGeometry(12, 1);
+        const icoMat = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.03,
+            blending: THREE.AdditiveBlending
+        });
+        const icoMesh = new THREE.Mesh(icoGeo, icoMat);
+        icoMesh.position.set(22, 2, -25);
+        icoMesh.scale.set(0.6, 0.6, 0.6);
+        scene.add(icoMesh);
+    
+        window._bgSphere = icoMesh;
+    
+        // ── RESIZE ─────────────────────────────────────────────────────
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    
+        // ── ANIMATION LOOP ─────────────────────────────────────────────
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            const time = Date.now() * 0.0001;
+            const elapsed = Date.now() * 0.0003;
+    
+            // 1. Particle movement — wave motion
+            const posArray = particleGeometry.attributes.position.array;
+            for (let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                // Gentle wave motion on Y axis
+                posArray[i3 + 1] += Math.sin(time + posArray[i3] * 0.5) * 0.02;
+                // Slow drift
+                posArray[i3] += Math.sin(time * 0.3 + i * 0.1) * 0.01;
+            }
+            particleGeometry.attributes.position.needsUpdate = true;
+    
+            // 2. Rotate Rings
+            ring.rotation.z += 0.0008;
+            ring2.rotation.z -= 0.0005;
+            ring2.rotation.y += 0.0003;
+    
+            // 3. Subtle Icosahedron Movement
+            icoMesh.rotation.y += 0.0006;
+            icoMesh.rotation.x += 0.0002;
+            
+            // 4. Shape Rotation
+            shapes.children.forEach(s => {
+                s.rotation.x += s.userData.rotX;
+                s.rotation.y += s.userData.rotY;
+            });
+    
+            // 5. Camera — gentle auto float + mouse parallax
+            camera.position.y = Math.sin(elapsed * 0.5) * 0.8;
+            camera.position.x = Math.cos(elapsed * 0.3) * 0.5;
+    
+            camera.position.x += (mouseX * 2 - camera.position.x) * 0.01;
+            camera.position.y += (-mouseY * 1 - camera.position.y) * 0.01;
+            
+            camera.lookAt(scene.position);
+    
+            renderer.render(scene, camera);
+        }
+        animate();
+    }
+    
+    // Global function to transition background element positions per page
+    window.repositionSphere = function(pageName) {
+        const mesh = window._bgSphere;
+        if (!mesh || typeof gsap === 'undefined') return;
+    
+        const positions = {
+            dashboard:  { x:  26,  y:  3,  z: -30, s: 0.75 },
+            cases:      { x:  10,  y:  1,  z: -15, s: 0.55 },
+            hearings:   { x:  12,  y: -1,  z: -18, s: 0.5 },
+            verdicts:   { x: -12,  y:  2,  z: -16, s: 0.55 },
+            judges:     { x:  10,  y: -2,  z: -14, s: 0.55 },
+            lawyers:    { x: -10,  y:  1,  z: -15, s: 0.5 },
+            parties:    { x:  10,  y:  2,  z: -18, s: 0.5 },
+            courtrooms: { x: -10,  y: -1,  z: -14, s: 0.6 },
+            evidence:   { x:  12,  y: -1,  z: -18, s: 0.5 }
+        };
+        const p = positions[pageName] || { x: 7, y: -1, z: -12, s: 0.5 };
+    
+        gsap.to(mesh.position, { x: p.x, y: p.y, z: p.z, duration: 1.5, ease: 'power2.inOut' });
+        gsap.to(mesh.scale,    { x: p.s, y: p.s, z: p.s, duration: 1.5, ease: 'power2.inOut' });
+    };
+    
+    window.initThreeBackground = initThreeBackground;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (window.initThreeBackground) {
+            initThreeBackground();
+        }
+
+        // Entrance GSAP animations for beautiful staggered appearance
+        gsap.from(".hero-title-1", { y: 100, opacity: 0, duration: 1.2, ease: "power4.out", delay: 0.2 });
+        gsap.from(".hero-title-2", { y: 100, opacity: 0, duration: 1.2, ease: "power4.out", delay: 0.4 });
+        gsap.from(".hero-desc", { y: 30, opacity: 0, duration: 1, ease: "power3.out", delay: 0.6 });
+        gsap.from(".nav-container", { y: -50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.8 });
+        gsap.from([".hero-stat-1", ".hero-stat-2", ".hero-stat-3"], {
+            opacity: 0,
+            scale: 0.8,
+            duration: 1,
+            stagger: 0.2,
+            ease: "back.out(1.4)",
+            delay: 1.0
+        });
+        gsap.from(".hero-scroll", { opacity: 0, y: -10, duration: 1, repeat: -1, yoyo: true, ease: "power1.inOut", delay: 1.5 });
+    });
+  </script>
+</body>
+</html>

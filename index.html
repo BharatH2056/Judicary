@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JudicaMS - Cinematic 3D</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖</text></svg>">
+    
+    <script>
+        // Redirect to landing page if coming fresh (not from internal navigation)
+        if (!sessionStorage.getItem('entered')) {
+            window.location.href = 'landing.html';
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tabler Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    
+    <!-- CSS Preload -->
+    <link rel="preload" href="css/style.css?v=4.3" as="style">
+    <link rel="preload" href="css/components.css?v=4.3" as="style">
+    <link rel="stylesheet" href="css/animations.css?v=4.3">
+    <link rel="stylesheet" href="css/style.css?v=4.3">
+    <link rel="stylesheet" href="css/components.css?v=4.3">
+    <!-- Depth fix: loaded LAST so opacity/blur overrides always win -->
+    <link rel="stylesheet" href="css/depth-fix.css?v=4.3">
+
+
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body class="dark-theme">
+    <!-- Ambient Glow Orbs -->
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+
+    <!-- THREE.JS 3D SCENE BACKGROUND -->
+    <div id="three-bg-container"></div>
+
+    <!-- Right-side ambient glow (sphere zone) -->
+    <div id="bg-right-glow"></div>
+
+    <div id="app">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <i class="ti ti-building-arch"></i>
+                JudicaMS
+            </div>
+
+            <div class="nav-section-label">Main</div>
+            <a href="#dashboard" class="nav-item active" data-path="dashboard">
+                <i class="ti ti-layout-dashboard"></i>
+                Dashboard
+            </a>
+            <a href="#cases" class="nav-item" data-path="cases">
+                <i class="ti ti-folder-open"></i>
+                Cases
+            </a>
+            <a href="#hearings" class="nav-item" data-path="hearings">
+                <i class="ti ti-calendar-event"></i>
+                Hearings
+            </a>
+            <a href="#verdicts" class="nav-item" data-path="verdicts">
+                <i class="ti ti-gavel"></i>
+                Verdicts
+            </a>
+
+            <div class="nav-section-label">People</div>
+            <a href="#judges" class="nav-item" data-path="judges">
+                <i class="ti ti-user-check"></i>
+                Judges
+            </a>
+            <a href="#lawyers" class="nav-item" data-path="lawyers">
+                <i class="ti ti-briefcase"></i>
+                Lawyers
+            </a>
+            <a href="#parties" class="nav-item" data-path="parties">
+                <i class="ti ti-users"></i>
+                Parties
+            </a>
+
+            <div class="nav-section-label">Resources</div>
+            <a href="#courtrooms" class="nav-item" data-path="courtrooms">
+                <i class="ti ti-building"></i>
+                Courtrooms
+            </a>
+            <a href="#evidence" class="nav-item" data-path="evidence">
+                <i class="ti ti-file-description"></i>
+                Evidence
+            </a>
+
+            <div class="sidebar-bottom">
+                <a href="landing.html" style="display:flex; align-items:center; gap:8px; padding:10px 16px; margin:4px 8px; border-radius:8px; color:rgba(255,255,255,0.4); font-size:13px; text-decoration:none; transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.background='rgba(255,255,255,0.05)'" onmouseout="this.style.color='rgba(255,255,255,0.4)';this.style.background='transparent'">
+                    <i class="ti ti-arrow-left" style="font-size:16px;"></i>
+                    Landing Page
+                </a>
+                <a href="#" class="nav-item" id="btn-reset-db">
+                    <i class="ti ti-settings"></i>
+                    Reset Database
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="main-wrapper">
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="mobile-toggle" id="mobileToggle"><i class="ti ti-menu-2"></i></button>
+                    <div class="breadcrumb" id="breadcrumbs">
+                        <span>Home</span> <i class="ti ti-chevron-right"></i> <span>Dashboard</span>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button onclick="navigateTo('settings')" style="display:flex; align-items:center; gap:8px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:8px 16px; color:rgba(255,255,255,0.6); font-size:13px; font-family:'Inter',sans-serif; transition:all 0.2s; cursor:pointer;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.color='rgba(255,255,255,0.6)';this.style.borderColor='rgba(255,255,255,0.1)'">
+                        <i class="ti ti-settings" style="font-size:16px;"></i>
+                        Settings
+                    </button>
+                    <div id="v4-indicator">V4.3_SYNC</div>
+                </div>
+            </header>
+
+            <!-- Dynamic Content -->
+            <main class="content-area" id="content">
+                <!-- Pages will be loaded here -->
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+    
+    <!-- Modal Container -->
+    <div id="modal-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/three-background.js?v=4.3"></script>
+    <script src="js/data.js?v=4.3"></script>
+    <script src="js/utils.js?v=4.3"></script>
+    <script src="js/router.js?v=4.3"></script>
+    
+    <!-- Page Scripts -->
+    <script src="js/dashboard.js?v=4.3"></script>
+    <script src="js/cases.js?v=4.3"></script>
+    <script src="js/hearings.js?v=4.3"></script>
+    <script src="js/verdicts.js?v=4.3"></script>
+    <script src="js/judges.js?v=4.3"></script>
+    <script src="js/lawyers.js?v=4.3"></script>
+    <script src="js/parties.js?v=4.3"></script>
+    <script src="js/courtrooms.js?v=4.3"></script>
+    <script src="js/evidence.js?v=4.3"></script>
+    <script src="js/settings.js?v=4.3"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize 3D Background
+            if (window.initThreeBackground) {
+                initThreeBackground();
+            }
+
+            // Initial UI GSAP Animations
+            gsap.from(".sidebar-logo", { y: -50, opacity: 0, duration: 1, ease: "elastic.out(1, 0.5)", delay: 0.2 });
+            gsap.from(".nav-item", {
+                x: -50,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.08,
+                ease: "back.out(1.7)",
+                delay: 0.4,
+                clearProps: 'opacity,x'
+            });
+            gsap.from(".topbar", { y: -30, opacity: 0, duration: 0.8, ease: "power3.out", delay: 0.5 });
+            
+            initRouter();
+            
+            // Mouse Parallax Effect (sidebar only — metric-card parallax removed: caused layout shift)
+            document.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 2;
+                const y = (e.clientY / window.innerHeight - 0.5) * 2;
+                gsap.to('.sidebar', { x: x * -3, y: y * -2, duration: 1.2, ease: "power2.out" });
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.key === '/') {
+                    if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                        e.preventDefault();
+                        document.getElementById('globalSearch').focus();
+                    }
+                } else if (e.key === 'n' || e.key === 'N') {
+                    if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+                        const newBtn = document.querySelector('.btn-primary[id^="btn-new-"]');
+                        if (newBtn) {
+                            e.preventDefault();
+                            newBtn.click();
+                        }
+                    }
+                }
+            });
+
+            // Mobile menu toggle
+            const sidebar = document.getElementById('sidebar');
+            const mobileToggle = document.getElementById('mobileToggle');
+            const mobileClose = document.getElementById('mobileClose');
+            if (mobileToggle) mobileToggle.addEventListener('click', () => sidebar.classList.add('open'));
+            if (mobileClose) mobileClose.addEventListener('click', () => sidebar.classList.remove('open'));
+
+            // Reset DB
+            document.getElementById('btn-reset-db').addEventListener('click', (e) => {
+                e.preventDefault();
+                if(window.confirmDialog) {
+                    confirmDialog("Are you sure you want to reset the database to its default state? All your changes will be lost.", () => {
+                        localStorage.removeItem('cjms_data');
+                        window.location.reload();
+                    });
+                } else {
+                    if(confirm("Are you sure?")) {
+                        localStorage.removeItem('cjms_data');
+                        window.location.reload();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

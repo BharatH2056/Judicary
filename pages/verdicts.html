@@ -1,0 +1,45 @@
+<div class="page-container">
+    <div class="page-header">
+        <div>
+            <h2 class="page-title">Verdicts Registry</h2>
+            <p class="text-secondary" style="margin-top: 4px; font-size: 14px;">Log and manage final court decisions.</p>
+        </div>
+        <button class="btn-primary" id="btn-add-verdict">
+            <i class="ti ti-plus"></i> Record Verdict
+        </button>
+    </div>
+
+    <!-- Relationship Enforcement Info -->
+    <div class="dashboard-panel" style="border-left: 4px solid var(--accent-primary); background: rgba(124, 58, 237, 0.05); margin-bottom: 24px;">
+        <div style="display: flex; align-items: center; gap: 12px; color: var(--text-primary);">
+            <i class="ti ti-info-circle" style="color: var(--accent-primary); font-size: 1.2rem;"></i>
+            <div style="font-size: 0.9rem; line-height: 1.5;">
+                <strong style="color: var(--accent-primary);">1:1 Relationship Enforcement:</strong> 
+                Each case can only have one verdict. The registry only displays cases pending final decision.
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-panel">
+        <div class="filter-bar" style="display: flex; gap: 16px; margin-bottom: 24px; align-items: center; flex-wrap: wrap;">
+            <div class="search-box" style="flex: 1; min-width: 250px; position: relative;">
+                <i class="ti ti-search" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                <input type="text" class="form-control" id="verdict-search" placeholder="Search by Case Title or Details..." style="padding-left: 40px;">
+            </div>
+            <select class="form-control" id="filter-decision" style="width: 180px;">
+                <option value="">All Decisions</option>
+                <option value="Guilty">Guilty</option>
+                <option value="Not Guilty">Not Guilty</option>
+                <option value="Acquitted">Acquitted</option>
+                <option value="Dismissed">Dismissed</option>
+            </select>
+            <div style="font-size: 13px; color: var(--text-muted);" id="verdict-count">
+                Showing 0 verdicts
+            </div>
+        </div>
+
+        <div id="verdicts-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px;">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+</div>
