@@ -284,7 +284,7 @@ const playGavelSound = () => {
 };
 
 // --- API INTEGRATION ---
-const API_BASE = 'http://localhost:5001/api'
+const API_BASE = 'https://judicams-backend.onrender.com/api'
 
 // Universal fetch helper
 async function apiFetch(endpoint, method = 'GET', body = null) {

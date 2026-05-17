@@ -8,7 +8,7 @@ async function initDashboard() {
   }
 
   try {
-    const BASE = 'http://localhost:5001/api'
+    const BASE = 'https://judicams-backend.onrender.com/api'
 
     const [casesRes, hearingsRes, verdictsRes] = await Promise.all([
       fetch(`${BASE}/cases`),

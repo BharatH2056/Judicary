@@ -1,7 +1,7 @@
 async function initSettings() {
   // Check API status
   try {
-    const res = await fetch('http://localhost:5001/api/cases')
+    const res = await fetch('https://judicams-backend.onrender.com/api/cases')
     const statusEl = document.getElementById('api-status')
     if (statusEl) {
       if (res.ok) {
@@ -29,7 +29,7 @@ async function initSettings() {
 
 async function exportData() {
   try {
-    const res = await fetch('http://localhost:5001/api/cases')
+    const res = await fetch('https://judicams-backend.onrender.com/api/cases')
     const data = await res.json()
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
@@ -46,7 +46,7 @@ async function exportData() {
 async function resetDatabase() {
   if (!confirm('Are you sure? This will clear all data and reseed sample data.')) return
   try {
-    const res = await fetch('http://localhost:5001/api/reset', { method: 'POST' })
+    const res = await fetch('https://judicams-backend.onrender.com/api/reset', { method: 'POST' })
     if (res.ok) {
       alert('Database reset successfully!')
       navigateTo('dashboard')
