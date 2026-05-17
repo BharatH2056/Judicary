@@ -40,6 +40,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body class="dark-theme">
+    <script>
+      if (!document.referrer.includes('landing.html') && !sessionStorage.getItem('entered')) {
+        window.location.href = 'landing.html';
+      }
+    </script>
     <!-- Ambient Glow Orbs -->
     <div class="ambient-orb orb-1"></div>
     <div class="ambient-orb orb-2"></div>
