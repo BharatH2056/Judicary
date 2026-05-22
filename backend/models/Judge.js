@@ -17,6 +17,14 @@ const JudgeSchema = new mongoose.Schema({
         type: Number,
         min: 0
     },
+    email: {
+        type: String,
+        default: ''
+    },
+    phone: {
+        type: String,
+        default: ''
+    },
     courtroom_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Courtroom',

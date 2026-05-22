@@ -20,7 +20,11 @@ const VerdictSchema = new mongoose.Schema({
     },
     verdict_date: {
         type: Date,
-        required: true
+        default: Date.now
+    },
+    remarks: {
+        type: String,
+        default: ''
     }
 });
 

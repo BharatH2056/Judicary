@@ -21,6 +21,11 @@ const EvidenceSchema = new mongoose.Schema({
     submitted_by: {
         type: String
     },
+    status: {
+        type: String,
+        enum: ['Submitted', 'Verified', 'Rejected'],
+        default: 'Submitted'
+    },
     submitted_date: {
         type: Date,
         default: Date.now

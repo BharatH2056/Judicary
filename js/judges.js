@@ -151,6 +151,10 @@ async function initJudges() {
                     <div class="form-group"><label class="form-label">Specialization</label><select class="form-control" id="new-j-spec" required><option value="Criminal">Criminal</option><option value="Civil">Civil</option><option value="Family">Family</option><option value="Corporate">Corporate</option></select></div>
                     <div class="form-group"><label class="form-label">Experience (Years)</label><input type="number" class="form-control" id="new-j-exp" required min="1"></div>
                 </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-control" id="new-j-email" placeholder="judge@example.com"></div>
+                    <div class="form-group"><label class="form-label">Phone</label><input type="text" class="form-control" id="new-j-phone" placeholder="123-456-7890"></div>
+                </div>
                 <div class="form-group"><label class="form-label">Assign Courtroom</label><select class="form-control" id="judge-courtroom-select">${crOptionsHtml}</select></div>
             </form>`,
             saveText: 'Add Judge',
@@ -160,6 +164,8 @@ async function initJudges() {
                     name: document.getElementById('new-j-name').value,
                     specialization: document.getElementById('new-j-spec').value,
                     experience_yrs: parseInt(document.getElementById('new-j-exp').value),
+                    email: document.getElementById('new-j-email').value,
+                    phone: document.getElementById('new-j-phone').value,
                     courtroom_id: document.getElementById('judge-courtroom-select').value || null
                 };
                 try {
@@ -227,6 +233,10 @@ async function initJudges() {
                     <div class="form-group"><label class="form-label">Specialization</label><select class="form-control" id="edit-j-spec" required><option value="Criminal" ${j.specialization==='Criminal'?'selected':''}>Criminal</option><option value="Civil" ${j.specialization==='Civil'?'selected':''}>Civil</option><option value="Family" ${j.specialization==='Family'?'selected':''}>Family</option><option value="Corporate" ${j.specialization==='Corporate'?'selected':''}>Corporate</option></select></div>
                     <div class="form-group"><label class="form-label">Experience (Years)</label><input type="number" class="form-control" id="edit-j-exp" required min="1" value="${j.experience_yrs || 0}"></div>
                 </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                    <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-control" id="edit-j-email" value="${j.email || ''}"></div>
+                    <div class="form-group"><label class="form-label">Phone</label><input type="text" class="form-control" id="edit-j-phone" value="${j.phone || ''}"></div>
+                </div>
                 <div class="form-group"><label class="form-label">Assign Courtroom</label><select class="form-control" id="judge-courtroom-select">${crOptionsHtml}</select></div>
             </form>`,
             saveText: 'Save Changes',
@@ -236,6 +246,8 @@ async function initJudges() {
                     name: document.getElementById('edit-j-name').value,
                     specialization: document.getElementById('edit-j-spec').value,
                     experience_yrs: parseInt(document.getElementById('edit-j-exp').value),
+                    email: document.getElementById('edit-j-email').value,
+                    phone: document.getElementById('edit-j-phone').value,
                     courtroom_id: document.getElementById('judge-courtroom-select').value || null
                 };
                 try {
@@ -270,6 +282,12 @@ async function initJudges() {
                 <div style="width:72px;height:72px;border-radius:18px;background:var(--accent-light);border:2px solid var(--border-medium);display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:1.8rem;font-weight:700;color:var(--text-primary);margin:0 auto 12px;">${initials}</div>
                 <h3 style="font-size:1.2rem;font-weight:700;color:var(--text-primary);">${j.name}</h3>
                 <div style="color:var(--text-muted);margin-top:4px;font-size:0.875rem;">${j.experience_yrs || 0} Years Experience • ${j.specialization} Law</div>
+            </div>
+            <div class="detail-section"><h4>Contact Info</h4>
+                <div style="padding:14px;background:var(--bg-card);border-radius:10px;border:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:6px;">
+                    <div style="font-size:0.875rem;color:var(--text-primary);">Email: ${j.email || 'N/A'}</div>
+                    <div style="font-size:0.875rem;color:var(--text-primary);">Phone: ${j.phone || 'N/A'}</div>
+                </div>
             </div>
             <div class="detail-section"><h4>Courtroom Assignment</h4>
                 <div style="padding:14px;background:var(--bg-card);border-radius:10px;border:1px solid var(--border-subtle);">

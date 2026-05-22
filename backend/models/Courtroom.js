@@ -13,7 +13,8 @@ const CourtroomSchema = new mongoose.Schema({
         type: Number
     },
     capacity: {
-        type: Number
+        type: Number,
+        default: 50
     },
     status: {
         type: String,

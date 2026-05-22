@@ -322,8 +322,17 @@ async function initHearings() {
                             </select>
                         </div>
                         <div class="form-group">
+                            <label class="form-label">Status</label>
+                            <select class="form-control" id="new-hr-status" required>
+                                <option value="Scheduled" selected>Scheduled</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Postponed">Postponed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label class="form-label">Notes</label>
-                            <input type="text" class="form-control" id="new-hr-notes">
+                            <textarea class="form-control" id="new-hr-notes" rows="3"></textarea>
                         </div>
                     </form>
                 `,
@@ -337,6 +346,7 @@ async function initHearings() {
                     const judgeVal = document.getElementById('new-hr-judge').value;
                     const crVal = document.getElementById('new-hr-cr').value;
                     const caseVal = document.getElementById('new-hr-case').value;
+                    const statusVal = document.getElementById('new-hr-status').value;
                     const notesVal = document.getElementById('new-hr-notes').value;
                     
                     // Conflict check (Optional: Frontend pre-check)
@@ -359,6 +369,7 @@ async function initHearings() {
                             courtroom_id: crVal,
                             date: dateVal,
                             time: timeVal,
+                            status: statusVal,
                             notes: notesVal
                         };
                         
@@ -445,8 +456,17 @@ async function initHearings() {
                         </select>
                     </div>
                     <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-control" id="edit-hr-status" required>
+                            <option value="Scheduled" ${h.status === 'Scheduled' ? 'selected' : ''}>Scheduled</option>
+                            <option value="Completed" ${h.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                            <option value="Postponed" ${h.status === 'Postponed' ? 'selected' : ''}>Postponed</option>
+                            <option value="Cancelled" ${h.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label class="form-label">Notes</label>
-                        <input type="text" class="form-control" id="edit-hr-notes" value="${h.notes || ''}">
+                        <textarea class="form-control" id="edit-hr-notes" rows="3">${h.notes || ''}</textarea>
                     </div>
                 </form>
             `,
@@ -460,6 +480,7 @@ async function initHearings() {
                 const judgeVal = document.getElementById('edit-hr-judge').value;
                 const crVal = document.getElementById('edit-hr-cr').value;
                 const caseVal = document.getElementById('edit-hr-case').value;
+                const statusVal = document.getElementById('edit-hr-status').value;
                 const notesVal = document.getElementById('edit-hr-notes').value;
                 
                 // Conflict check
@@ -482,6 +503,7 @@ async function initHearings() {
                         courtroom_id: crVal,
                         date: dateVal,
                         time: timeVal,
+                        status: statusVal,
                         notes: notesVal
                     });
                     

@@ -19,6 +19,10 @@ const LawyerSchema = new mongoose.Schema({
     },
     contact: {
         type: String
+    },
+    email: {
+        type: String,
+        default: ''
     }
 });
 

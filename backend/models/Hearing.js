@@ -30,8 +30,14 @@ const HearingSchema = new mongoose.Schema({
         type: String,
         default: 'Scheduled'
     },
+    status: {
+        type: String,
+        enum: ['Scheduled', 'Completed', 'Postponed', 'Cancelled'],
+        default: 'Scheduled'
+    },
     notes: {
-        type: String
+        type: String,
+        default: ''
     }
 });
 

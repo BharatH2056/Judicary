@@ -22,7 +22,7 @@ const CaseSchema = new mongoose.Schema({
     },
     filing_date: {
         type: Date,
-        required: [true, 'Please add a filing date']
+        default: Date.now
     },
     notes: {
         type: String,

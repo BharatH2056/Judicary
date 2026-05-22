@@ -130,6 +130,7 @@ async function initEvidence() {
                 <div class="form-group"><label class="form-label">Evidence Type</label><select class="form-control" id="new-e-type" required><option value="Document">Document</option><option value="Physical">Physical Item</option><option value="Digital">Digital Media</option><option value="Testimony">Witness Testimony</option></select></div>
                 <div class="form-group"><label class="form-label">Description / Identifier</label><input type="text" class="form-control" id="new-e-desc" required placeholder="e.g. DNA Sample, CCTV Footage"></div>
                 <div class="form-group"><label class="form-label">Submitted By</label><input type="text" class="form-control" id="new-e-by" required placeholder="Name of submitter or lawyer"></div>
+                <div class="form-group"><label class="form-label">Status</label><select class="form-control" id="new-e-status" required><option value="Submitted" selected>Submitted</option><option value="Verified">Verified</option><option value="Rejected">Rejected</option></select></div>
             </form>`,
             saveText: 'Submit Evidence',
             onSave: async (overlay) => {
@@ -141,7 +142,8 @@ async function initEvidence() {
                     case_id: document.getElementById('new-e-case').value,
                     type: document.getElementById('new-e-type').value,
                     description: document.getElementById('new-e-desc').value,
-                    submitted_by: document.getElementById('new-e-by').value
+                    submitted_by: document.getElementById('new-e-by').value,
+                    status: document.getElementById('new-e-status').value
                 };
 
                 try {

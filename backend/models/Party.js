@@ -14,10 +14,12 @@ const PartySchema = new mongoose.Schema({
         enum: ['Plaintiff', 'Defendant', 'Witness']
     },
     contact: {
-        type: String
+        type: String,
+        default: ''
     },
     address: {
-        type: String
+        type: String,
+        default: ''
     }
 });
 

@@ -45,8 +45,12 @@ async function initLawyers() {
                             Bar No: <strong style="color: #fff;">${l.bar_number}</strong>
                         </div>
                         <div style="display: flex; align-items: center; gap: 8px;">
+                            <span class="material-icons-outlined" style="font-size: 16px; color: #94a3b8;">phone</span>
+                            Contact: ${l.contact || 'N/A'}
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
                             <span class="material-icons-outlined" style="font-size: 16px; color: #94a3b8;">email</span>
-                            ${l.contact}
+                            Email: ${l.email || 'N/A'}
                         </div>
                     </div>
                     
@@ -126,9 +130,15 @@ async function initLawyers() {
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Contact Email</label>
-                        <input type="email" class="form-control" id="new-l-contact" required>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+                        <div class="form-group">
+                            <label class="form-label">Contact Info (Phone/General)</label>
+                            <input type="text" class="form-control" id="new-l-contact" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="new-l-email">
+                        </div>
                     </div>
                 </form>
             `,
@@ -141,7 +151,8 @@ async function initLawyers() {
                     name: document.getElementById('new-l-name').value,
                     bar_number: document.getElementById('new-l-bar').value,
                     specialization: document.getElementById('new-l-spec').value,
-                    contact: document.getElementById('new-l-contact').value
+                    contact: document.getElementById('new-l-contact').value,
+                    email: document.getElementById('new-l-email').value
                 };
                 
                 try {
@@ -198,9 +209,15 @@ async function initLawyers() {
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Contact Email</label>
-                        <input type="email" class="form-control" id="edit-l-contact" value="${l.contact}" required>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+                        <div class="form-group">
+                            <label class="form-label">Contact Info (Phone/General)</label>
+                            <input type="text" class="form-control" id="edit-l-contact" value="${l.contact}" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="edit-l-email" value="${l.email || ''}">
+                        </div>
                     </div>
                 </form>
             `,
@@ -214,7 +231,8 @@ async function initLawyers() {
                         name: document.getElementById('edit-l-name').value,
                         bar_number: document.getElementById('edit-l-bar').value,
                         specialization: document.getElementById('edit-l-spec').value,
-                        contact: document.getElementById('edit-l-contact').value
+                        contact: document.getElementById('edit-l-contact').value,
+                        email: document.getElementById('edit-l-email').value
                     });
                     
                     await loadData();
@@ -268,7 +286,7 @@ async function initLawyers() {
                     </div>
                     <div>
                         <h3 style="font-size: 1.25rem; font-weight: 700;">${l.name}</h3>
-                        <div style="color: var(--text-muted); font-size: 0.875rem;">Bar No: ${l.bar_number} | ${l.contact}</div>
+                        <div style="color: var(--text-muted); font-size: 0.875rem;">Bar No: ${l.bar_number} | Contact: ${l.contact || 'N/A'} | Email: ${l.email || 'N/A'}</div>
                     </div>
                 </div>
                 
